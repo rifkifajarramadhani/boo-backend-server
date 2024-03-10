@@ -5,10 +5,6 @@ const Comment = mongoose.model('Comment', {
         type: Number,
         required: true,
     },
-    name: {
-        type: String,
-        required: true,
-    },
     profileId: {
         type: Number,
         required: true,
@@ -20,7 +16,7 @@ const Comment = mongoose.model('Comment', {
     votes: {
         mbti: String,
         enneagram: String,
-        variant: String,
+        zodiac: String,
     }
 });
 

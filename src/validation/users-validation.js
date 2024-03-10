@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
 const createUserValidation = Joi.object({
-    id: Joi.number().required(),
+    _id: Joi.number().required(),
     name: Joi.string().max(100).required(),
     description: Joi.string().max(200).required(),
     mbti: Joi.string().max(4).required(),

@@ -7,7 +7,7 @@ require('../config/db');
 
 const createUser = async (request) => {
     const {
-        id: _id,
+        _id,
         name,
         description,
         mbti,

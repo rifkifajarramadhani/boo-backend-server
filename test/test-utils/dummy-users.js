@@ -1,6 +1,8 @@
+const User = require("../../src/model/users-model");
+
 const users = [
     {
-        "id": 1,
+        "_id": 1,
         "name": "A Martinez",
         "description": "Adolph Larrue Martinez III.",
         "mbti": "ISFJ",
@@ -13,7 +15,7 @@ const users = [
         "image": "https://soulverse.boo.world/images/1.png"
     },
     {
-        "id": 2,
+        "_id": 2,
         "name": "R Araujo",
         "description": "Ronald Araujo.",
         "mbti": "ENTJ",
@@ -26,7 +28,7 @@ const users = [
         "image": "https://soulverse.boo.world/images/1.png"
     },
     {
-        "id": 3,
+        "_id": 3,
         "name": "CR7",
         "description": "Cristiano Ronaldo.",
         "mbti": "INTP",
@@ -40,4 +42,21 @@ const users = [
     },
 ];
 
-module.exports = users;
+const createTestUser = async () => {
+    await User.create(users[0], users[1], users[2]);
+}
+
+const getTestUser = async() => {
+    return User.findOne({ _id: users[0]._id });
+}
+
+const deleteTestUser = async () => {
+    await User.deleteMany({});
+}
+
+module.exports = {
+    users,
+    createTestUser,
+    getTestUser,
+    deleteTestUser
+};

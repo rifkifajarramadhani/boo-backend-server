@@ -9,32 +9,31 @@ const createComment = async (profileId, user, request) => {
 
     if (!checkProfileExists) throw new ResponseError(404, 'Profile not found');
 
-    const { _id: userId, name } = user;
+    const { _id: userId } = user;
     const {
         comment,
     } = request;
     const mbti = request.votes.mbti;
     const enneagram = request.votes.enneagram;
-    const variant = request.votes.variant;
+    const zodiac = request.votes.zodiac;
 
     validate(createCommentValidationSchema, {
         userId,
-        name,
+        profileId,
         comment,
         mbti,
         enneagram,
-        variant,
+        zodiac,
     });
 
     const data = {
         userId,
         profileId,
-        name,
         comment,
         votes: {
             mbti,
             enneagram,
-            variant,
+            zodiac,
         },
     };
 
