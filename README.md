@@ -93,5 +93,3 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 * **Rifki Fajar Ramadhani** - *Initial work* - rifkifajarramdhani (https://github.com/rifkifajarramadhani)
 ```
-
-Remember to replace placeholders like `yourusername`, `yourprojectname`, and other project-specific details with the actual information relevant to your project. This template is designed to be flexible and can be expanded based on your project's needs, such as adding sections for API endpoints, request/response examples, or additional configuration steps.
