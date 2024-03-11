@@ -21,6 +21,7 @@ What things you need to install the software and how to install them:
 
 - Node.js (v16 or later recommended)
 - npm (normally comes with Node.js)
+- MongoDB
 
 ### Installing
 
