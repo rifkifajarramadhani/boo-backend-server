@@ -40,10 +40,49 @@ const users = [
         "psyche": "FEVL",
         "image": "https://soulverse.boo.world/images/1.png"
     },
+    {
+        "_id": 4,
+        "name": "Alejandro Garnacho",
+        "description": "Biggest fans of Cristiano Ronaldo the G.O.A.T.",
+        "mbti": "ESTJ",
+        "enneagram": "9w8",
+        "variant": "sp/so",
+        "tritype": 303,
+        "socionics": "SEE",
+        "sloan": "RCOEN",
+        "psyche": "FEVL",
+        "image": "https://soulverse.boo.world/images/1.png"
+    },
+    {
+        "_id": 5,
+        "name": "Dovi",
+        "description": "Andrea Dovizioso.",
+        "mbti": "ENFP",
+        "enneagram": "4w5",
+        "variant": "sp/so",
+        "tritype": 101,
+        "socionics": "SEE",
+        "sloan": "RCOEN",
+        "psyche": "FEVL",
+        "image": "https://soulverse.boo.world/images/1.png"
+    },
+    {
+        "_id": 6,
+        "name": "Pato Morales",
+        "description": "Patricio Morales.",
+        "mbti": "ISFP",
+        "enneagram": "3w4",
+        "variant": "sp/so",
+        "tritype": 999,
+        "socionics": "SEE",
+        "sloan": "RCOEN",
+        "psyche": "FEVL",
+        "image": "https://soulverse.boo.world/images/1.png"
+    },
 ];
 
 const createTestUser = async () => {
-    await User.create(users[0], users[1], users[2]);
+    await User.create(users);
 }
 
 const getTestUser = async() => {

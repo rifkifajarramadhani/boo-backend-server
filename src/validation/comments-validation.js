@@ -10,5 +10,5 @@ const createCommentValidationSchema = Joi.object({
 });
 
 module.exports = {
-    createCommentValidationSchema
+    createCommentValidationSchema,
 }

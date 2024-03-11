@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
+const { Schema } = require('mongoose');
 
-const Comment = mongoose.model('Comment', {
-    userId: {
+const commentSchema = new Schema({
+    user: {
         type: Number,
+        ref: 'User',
         required: true,
     },
-    profileId: {
+    profile: {
         type: Number,
         required: true,
     },
@@ -18,6 +20,8 @@ const Comment = mongoose.model('Comment', {
         enneagram: String,
         zodiac: String,
     }
-});
+}, { timestamps: true });
+
+const Comment = mongoose.model('Comment', commentSchema);
 
 module.exports = Comment;

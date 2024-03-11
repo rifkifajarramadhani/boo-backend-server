@@ -12,6 +12,7 @@ router.use(authMiddleware);
 router.post('/profile/:profileId/comments', commentController.createComment);
 router.get('/profile/:profileId/comments', commentController.getComments);
 router.post('/profile/:profileId/comments/:commentId', commentController.likeComment);
+router.get('/profile/:profileId/comments/:commentId', commentController.getLikeByCommentId);
 
 router.use(errorMiddleware);
 

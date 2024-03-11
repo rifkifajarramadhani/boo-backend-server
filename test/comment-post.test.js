@@ -5,10 +5,15 @@ const { app } = require('./test-utils/web');
 const { 
     users, 
     createTestUser, 
-    deleteTestUser, 
-    getTestUser 
+    getTestUser, 
+    deleteTestUser
 } = require('./test-utils/dummy-users');
-const { comments } = require('./test-utils/dummy-comments');
+const { 
+    comments, 
+    deleteTestComments, 
+    createTestComents, 
+    getTestComents,
+} = require('./test-utils/dummy-comments');
 
 let mongoServer;
 
@@ -18,18 +23,26 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-    await mongoose.connection.dropDatabase();
-    await mongoose.connection.close();
     await mongoServer.stop();
 });
 
 describe('POST /profile/:profileId/comments', () => {
+    let profile;
+
     beforeAll(async () => {
         await createTestUser();
+        profile = await getTestUser();
+    });
+    
+    afterAll(async () => {
+        await deleteTestUser();
+    });
+    
+    afterEach(async () => {
+        await deleteTestComments();
     });
 
     it('should create new comment with full votes', async () => {
-        const profile = await getTestUser();
 
         const result = await supertest(app)
             .post(`/profile/${profile._id}/comments`)
@@ -41,8 +54,8 @@ describe('POST /profile/:profileId/comments', () => {
             .set('authorization', users[1].name);
 
         expect(result.status).toBe(201);
-        expect(check.body.data[0].userId).toBe(comments[0].userId);
-        expect(check.body.data[0].profileId).toBe(comments[0].profileId);
+        expect(check.body.data[0].user._id).toBe(comments[0].user);
+        expect(check.body.data[0].profile).toBe(comments[0].profile);
         expect(check.body.data[0].comment).toBe(comments[0].comment);
         expect(check.body.data[0].votes.mbti).toBe(comments[0].votes.mbti);
         expect(check.body.data[0].votes.enneagram).toBe(comments[0].votes.enneagram);
@@ -50,8 +63,6 @@ describe('POST /profile/:profileId/comments', () => {
     });
 
     it('should create new comment with only one vote', async () => {
-        const profile = await getTestUser();
-
         const result = await supertest(app)
             .post(`/profile/${profile._id}/comments`)
             .set('authorization', users[2].name)
@@ -59,18 +70,16 @@ describe('POST /profile/:profileId/comments', () => {
 
         const check = await supertest(app)
             .get(`/profile/${profile._id}/comments`)
-            .set('authorization', users[1].name);
+            .set('authorization', users[2].name);
 
         expect(result.status).toBe(201);
-        expect(check.body.data[0].userId).toBe(comments[1].userId);
-        expect(check.body.data[0].profileId).toBe(comments[1].profileId);
+        expect(check.body.data[0].user._id).toBe(comments[1].user);
+        expect(check.body.data[0].profile).toBe(comments[1].profile);
         expect(check.body.data[0].comment).toBe(comments[1].comment);
         expect(check.body.data[0].votes.mbti).toBe(comments[1].votes.mbti);
     });
 
     it('should block unauthorized user', async () => {
-        const profile = await getTestUser();
-
         const result = await supertest(app)
             .post(`/profile/${profile._id}/comments`)
             .send(comments[0]);
@@ -78,8 +87,16 @@ describe('POST /profile/:profileId/comments', () => {
         expect(result.status).toBe(401);
     });
 
+    it('should block unauthorized user with invalid authorization', async () => {
+        const result = await supertest(app)
+            .post(`/profile/${profile._id}/comments`)
+            .set('authorization', 'invalid user name')
+            .send(comments[0]);
+
+        expect(result.status).toBe(401);
+    });
+
     it('should failed to create comment with bad payload', async () => {
-        const profile = await getTestUser();
         delete comments[0].comment;
 
         const result = await supertest(app)

@@ -1,16 +1,14 @@
 const mongoose = require('mongoose');
 
 const Like = mongoose.model('Like', {
-    userId: {
+    user: {
         type: Number,
+        ref: 'User',
         required: true,
     },
-    name: {
+    comment: {
         type: String,
-        required: true,
-    },
-    commentId: {
-        type: String,
+        ref: 'Comment',
         required: true,
     },
 });
